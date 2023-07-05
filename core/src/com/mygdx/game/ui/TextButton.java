@@ -30,4 +30,5 @@ public class TextButton extends UiComponent {
         font.draw(myGdxGame.batch, text, x, y);
     }
 
+
 }

@@ -38,8 +38,8 @@ public class MyGdxGame extends Game {
 		commonFont = new MyCustomFont(50, "fonts/arnamu.ttf");
 		largeFont = new MyCustomFont(100, "fonts/arnamu.ttf");
 
-		aboutScreen = new AboutScreen();
-		gameScreen = new GameScreen();
+		aboutScreen = new AboutScreen(this);
+		gameScreen = new GameScreen(this);
 		menuScreen = new MenuScreen(this);
 		settingsScreen = new SettingsScreen(this);
 

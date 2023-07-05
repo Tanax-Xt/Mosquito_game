@@ -20,7 +20,7 @@ public class TextView extends UiComponent {
         width = gl.width;
         height = gl.height;
 
-        if ((int) x == -1) this.x = GameSettings.SCR_WIDTH / 2 - width / 2;
+        if ((int) x == -1) this.x = (float) GameSettings.SCR_WIDTH / 2 - width / 2;
     }
 
     @Override

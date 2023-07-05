@@ -50,7 +50,6 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         if (Gdx.input.justTouched()) {
             myGdxGame.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             myGdxGame.touch = myGdxGame.camera.unproject(myGdxGame.touch);

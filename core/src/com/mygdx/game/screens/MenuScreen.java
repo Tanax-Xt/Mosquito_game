@@ -16,26 +16,28 @@ public class MenuScreen implements Screen {
 
     public MyGdxGame myGdxGame;
     ArrayList<UiComponent> uiComponentsList;
+    ImageView background;
+    TextButton buttonStart;
+    TextButton buttonSettings;
+    TextButton buttonAbout;
+    TextButton buttonExit;
+    TextView title;
 
     public MenuScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
 
         uiComponentsList = new ArrayList<>();
 
-        ImageView background = new ImageView(0, 0, GameSettings.SCR_WIDTH, GameSettings.SCR_HEIGHT, "backgrounds/homeBG.jpg");
-        TextView title = new TextView(myGdxGame.largeFont.bitmapFont, "Welcome to Mosquito game", -1, 950);
+        background = new ImageView(0, 0, GameSettings.SCR_WIDTH, GameSettings.SCR_HEIGHT, "backgrounds/homeBG.jpg");
+        title = new TextView(myGdxGame.largeFont.bitmapFont, "Welcome to Mosquito game", -1, 950);
 
-        TextButton buttonStart = new TextButton(myGdxGame.commonFont.bitmapFont, "Start", 200, 700);
-        buttonStart.setOnClickListener(onButtonStartClicked);
+        buttonStart = new TextButton(myGdxGame.commonFont.bitmapFont, "Start", 200, 700);
 
-        TextButton buttonSettings = new TextButton(myGdxGame.commonFont.bitmapFont, "Settings", 200, 600);
-        buttonSettings.setOnClickListener(onButtonSettingsClicked);
+        buttonSettings = new TextButton(myGdxGame.commonFont.bitmapFont, "Settings", 200, 600);
 
-        TextButton buttonAbout = new TextButton(myGdxGame.commonFont.bitmapFont, "About", 200, 500);
-        buttonAbout.setOnClickListener(onButtonAboutClicked);
+        buttonAbout = new TextButton(myGdxGame.commonFont.bitmapFont, "About", 200, 500);
 
-        TextButton buttonExit = new TextButton(myGdxGame.commonFont.bitmapFont, "Exit", 200, 400);
-        buttonExit.setOnClickListener(onButtonExitClicked);
+        buttonExit = new TextButton(myGdxGame.commonFont.bitmapFont, "Exit", 200, 400);
 
         uiComponentsList.add(background);
         uiComponentsList.add(title);
@@ -52,10 +54,13 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        buttonStart.setOnClickListener(onButtonStartClicked);
+        buttonSettings.setOnClickListener(onButtonSettingsClicked);
+        buttonAbout.setOnClickListener(onButtonAboutClicked);
+        buttonExit.setOnClickListener(onButtonExitClicked);
 
         if (Gdx.input.justTouched()) {
             myGdxGame.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            // check is it useful
             myGdxGame.camera.unproject(myGdxGame.touch);
             for (UiComponent component : uiComponentsList) {
                 if (component.isVisible) component.isHit(myGdxGame.touch.x, myGdxGame.touch.y);
@@ -96,12 +101,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
     }
-
-    /*private final UiComponent.OnClickListener onButtonStartClicked = () -> {
-        myGdxGame.setScreen(myGdxGame.gameScreen);
-    };*/
 
     private final UiComponent.OnClickListener onButtonStartClicked = new UiComponent.OnClickListener() {
         @Override
@@ -131,7 +131,7 @@ public class MenuScreen implements Screen {
         @Override
         public void onClicked() {
             Gdx.app.debug("onClicked", "onButtonExitClicked");
-            // myGdxGame.setScreen(myGdxGame.);
+            Gdx.app.exit();
         }
     };
 }
