@@ -26,9 +26,15 @@ public class AboutScreen implements Screen {
         ImageView background = new ImageView(0, 0, GameSettings.SCR_WIDTH, GameSettings.SCR_HEIGHT, "backgrounds/aboutBG.jpg");
         TextView title = new TextView(myGdxGame.largeFont.bitmapFont, "About", -1, 950);
         returnButton = new ImageView(200, 950, 100, 100, "icons/backIcon.png");
-        TextView information = new TextView(myGdxGame.commonFont.bitmapFont, "Учебный проект в рамках Школы программной инженерии", 100, 800);
-        TextView author = new TextView(myGdxGame.commonFont.bitmapFont, "Преподаватель - Павлюк Глеб", 100, 700);
-        TextView aboutGame = new TextView(myGdxGame.commonFont.bitmapFont, "Это игра про ПРИКЛЮЧЕНИЯ КОМАРИКОВ!", 100, 600);
+        TextView information = new TextView(myGdxGame.commonFont.bitmapFont, "Учебный проект в рамках Школы программной инженерии", -1, 850);
+        TextView author = new TextView(myGdxGame.commonFont.bitmapFont, "Преподаватель - Павлюк Глеб", 100, 750);
+        TextView team = new TextView(myGdxGame.commonFont.bitmapFont, "Состав команды:", 100, 650);
+        TextView teamLead = new TextView(myGdxGame.commonFont.bitmapFont, "Тимлид - Седельников Данила", 100, 550);
+        TextView teamProg1 = new TextView(myGdxGame.commonFont.bitmapFont, "Программист - Бойко София", 100, 450);
+        TextView teamProg2 = new TextView(myGdxGame.commonFont.bitmapFont, "Программист - Кулагин Александр", 100, 350);
+        TextView teamDesigner = new TextView(myGdxGame.commonFont.bitmapFont, "Геймдизайнер - Шабалина Ирина", 100, 250);
+
+        TextView aboutGame = new TextView(myGdxGame.commonFont.bitmapFont, "Это игра про ПРИКЛЮЧЕНИЯ КОМАРИКОВ!", 100, 150);
 
         returnButton.setOnClickListener(onReturnButtonClickListener);
 
@@ -37,6 +43,11 @@ public class AboutScreen implements Screen {
         componentsList.add(returnButton);
         componentsList.add(information);
         componentsList.add(author);
+        componentsList.add(team);
+        componentsList.add(teamLead);
+        componentsList.add(teamProg1);
+        componentsList.add(teamProg2);
+        componentsList.add(teamDesigner);
         componentsList.add(aboutGame);
 
     }
