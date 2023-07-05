@@ -30,6 +30,8 @@ public class AboutScreen implements Screen {
         TextView author = new TextView(myGdxGame.commonFont.bitmapFont, "Преподаватель - Павлюк Глеб", 100, 700);
         TextView aboutGame = new TextView(myGdxGame.commonFont.bitmapFont, "Это игра про ПРИКЛЮЧЕНИЯ КОМАРИКОВ!", 100, 600);
 
+        returnButton.setOnClickListener(onReturnButtonClickListener);
+
         componentsList.add(background);
         componentsList.add(title);
         componentsList.add(returnButton);
@@ -46,8 +48,6 @@ public class AboutScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        returnButton.setOnClickListener(onReturnButtonClickListener);
-
         if (Gdx.input.justTouched()) {
             Vector3 vector3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             vector3 = myGdxGame.camera.unproject(vector3);
