@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.screens.AboutScreen;
-//import com.mygdx.game.screens.GameScreen;
+import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.SettingsScreen;
 import com.mygdx.game.utils.MyCustomFont;
@@ -25,7 +25,7 @@ public class MyGdxGame extends Game {
 
     public MenuScreen menuScreen;
     public SettingsScreen settingsScreen;
-//    public GameScreen gameScreen;
+    public GameScreen gameScreen;
     public AboutScreen aboutScreen;
 
     public SpriteBatch batch;
@@ -45,7 +45,7 @@ public class MyGdxGame extends Game {
         largeFont = new MyCustomFont(70, "fonts/arnamu.ttf", new Color(1, 1, 1, 1));
 
         aboutScreen = new AboutScreen(this);
-//        gameScreen = new GameScreen(this);
+        gameScreen = new GameScreen(this);
         menuScreen = new MenuScreen(this);
         settingsScreen = new SettingsScreen(this);
 
