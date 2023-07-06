@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.GameSettings;
+import com.mygdx.game.utils.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.ui.TextView;
 import com.mygdx.game.uiComponents.ImageView;

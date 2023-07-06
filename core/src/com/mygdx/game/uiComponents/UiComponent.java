@@ -2,9 +2,9 @@ package com.mygdx.game.uiComponents;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.GameSettings;
+import com.mygdx.game.utils.GameSettings;
 
-public class UiComponent {
+public abstract class UiComponent {
 
     public int x;
     public int y;
@@ -39,6 +39,8 @@ public class UiComponent {
         }
         return false;
     }
+
+//    public abstract boolean isHit(float tx, float ty);
 
     public interface OnClickListener {
         void onClick();

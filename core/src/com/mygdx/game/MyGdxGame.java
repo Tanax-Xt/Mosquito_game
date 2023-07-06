@@ -32,6 +32,7 @@ public class MyGdxGame extends Game {
     public MyCustomFont commonFont;
     public MyCustomFont accentFont;
     public MyCustomFont largeFont;
+    public Object secondaryFont;
 
     @Override
     public void create() {
@@ -41,7 +42,7 @@ public class MyGdxGame extends Game {
         camera.setToOrtho(false, 1920, 1080);
 
         commonFont = new MyCustomFont(40, "fonts/arnamu.ttf", new Color(1, 1, 1, 1));
-        accentFont = new MyCustomFont(40, "fonts/arnamu.ttf", new Color(0, 0, 1, 1));
+        accentFont = new MyCustomFont(40, "fonts/arnamubi.ttf", new Color(1, 1, 1, 1));
         largeFont = new MyCustomFont(70, "fonts/arnamu.ttf", new Color(1, 1, 1, 1));
 
         aboutScreen = new AboutScreen(this);

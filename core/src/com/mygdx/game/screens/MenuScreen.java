@@ -1,6 +1,6 @@
 package com.mygdx.game.screens;
 
-import static com.mygdx.game.GameSettings.*;
+import static com.mygdx.game.utils.GameSettings.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

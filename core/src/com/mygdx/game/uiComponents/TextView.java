@@ -1,10 +1,10 @@
 package com.mygdx.game.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.GameSettings;
-import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.utils.GameSettings;
 import com.mygdx.game.uiComponents.UiComponent;
 
 public class TextView extends UiComponent {

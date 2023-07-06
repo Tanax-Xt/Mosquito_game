@@ -2,57 +2,72 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.uiComponents.*;
+import com.mygdx.game.actors.Mosquito;
+import com.mygdx.game.ui.TextView;
+import com.mygdx.game.uiComponents.Blackout;
 import com.mygdx.game.uiComponents.ImageView;
+import com.mygdx.game.uiComponents.TextButton;
+import com.mygdx.game.uiComponents.UiComponent;
+import com.mygdx.game.utils.DifficultyLevel;
+import com.mygdx.game.utils.GameSession;
+import com.mygdx.game.utils.GameSettings;
+import com.mygdx.game.utils.MemoryLoader;
 
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
-    MyGdxGame myGdxGame;
+
     ArrayList<UiComponent> componentsList;
-    ArrayList<ImageView> mosquitoes = new ArrayList<>();
-    int vx = 10;
-    int vy = 10;
-    ImageView returnButton;
+    ArrayList<UiComponent> uiComponentsListEndOfGame;
+    ArrayList<Texture> mosquitoTextureList;
+    ArrayList<Mosquito> mosquitoList;
+    MyGdxGame myGdxGame;
+
+    int aliveMosquitoesCount;
+    GameSession gameSession;
+
+    TextButton returnButton;
+    TextView textViewSessionTime;
 
     public GameScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
+
+        Gdx.app.debug("GameScreen", "constructor");
+
+        gameSession = new GameSession();
+        mosquitoTextureList = new ArrayList<>();
         componentsList = new ArrayList<>();
+        uiComponentsListEndOfGame = new ArrayList<>();
+        mosquitoList = new ArrayList<>();
+        componentsList.add(new ImageView(0, 0, GameSettings.SCR_WIDTH,
+                GameSettings.SCR_HEIGHT, "backgrounds/gameBG.jpg"));
 
-        for (int i = 0; i < 10; i++) {
-            ImageView item = new ImageView(100, 100, 100, 100, "icons/mosquito.png");
-            mosquitoes.add(item);
-        }
-
-        ImageView background = new ImageView(0, 0, GameSettings.SCR_WIDTH, GameSettings.SCR_HEIGHT, "backgrounds/gameBG.jpg");
-        returnButton = new ImageView(200, 950, 100, 100, "icons/backIcon.png");
-        returnButton.setOnClickListener(onReturnButtonClickListener);
-
-        componentsList.add(background);
-        componentsList.add(returnButton);
+        uiComponentsListEndOfGame.add(new Blackout());
+        uiComponentsListEndOfGame.add(new TextView(myGdxGame.largeFont.bitmapFont,
+                "Our congratulations", -1, 900));
+        uiComponentsListEndOfGame.add(new TextView(myGdxGame.commonFont.bitmapFont,
+                "Your time: ", 300, 700));
+        textViewSessionTime = new TextView(myGdxGame.commonFont.bitmapFont, "", 700, 700);
+        returnButton = new TextButton(myGdxGame.accentFont.bitmapFont, "Return home", 300, 500);
+        uiComponentsListEndOfGame.add(textViewSessionTime);
+        uiComponentsListEndOfGame.add(returnButton);
     }
-
-    private UiComponent.OnClickListener onReturnButtonClickListener = new UiComponent.OnClickListener() {
-        @Override
-        public void onClick() {
-            Gdx.app.debug("onClicked", "onReturnButtonClicked");
-            myGdxGame.setScreen(myGdxGame.menuScreen);
-        }
-    };
 
     @Override
     public void show() {
-
+        Gdx.app.debug("Show", "Show");
+        loadMosquitoes(MemoryLoader.loadDifficultyLevel());
     }
 
     @Override
     public void render(float delta) {
 
         if (Gdx.input.justTouched()) {
+            // add code
             Vector3 vector3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             vector3 = myGdxGame.camera.unproject(vector3);
             for (UiComponent component : componentsList) {
@@ -60,22 +75,26 @@ public class GameScreen implements Screen {
             }
         }
 
+        for (Mosquito mosquito : mosquitoList) {
+            if (mosquito.isAlive) mosquito.update();
+        }
+
         ScreenUtils.clear(0, 0, 0, 1);
         myGdxGame.camera.update();
-        myGdxGame.batch.begin();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+        myGdxGame.batch.begin();
 
-        for (UiComponent component : componentsList)
+        for (UiComponent component : componentsList) {
             component.draw(myGdxGame.batch);
+        }
 
-        for (ImageView mosquito : mosquitoes) {
-            mosquito.draw(myGdxGame.batch);
-            mosquito.setX(vx);
-            mosquito.setY(vy);
+        if (gameSession.gameState == GameSession.END_OF_GAME) {
+            for (UiComponent component : uiComponentsListEndOfGame) {
+                component.draw(myGdxGame.batch);
+            }
         }
 
         myGdxGame.batch.end();
-
     }
 
     @Override
@@ -102,4 +121,33 @@ public class GameScreen implements Screen {
     public void dispose() {
 
     }
+
+    void loadMosquitoes(DifficultyLevel difficultyLevel) {
+        mosquitoList = new ArrayList<>();
+        aliveMosquitoesCount = difficultyLevel.getCountOfEnemies();
+
+        for (int i = 0; i < 9; i++)
+            mosquitoTextureList.add(new Texture("tiles/mosq" + i + ".png"));
+        Texture deadMosquitoTexture = new Texture("tiles/mosq10.png");
+
+        for (int i = 0; i < aliveMosquitoesCount; i++) {
+            Mosquito mosquito = new Mosquito(mosquitoTextureList, deadMosquitoTexture,
+                    difficultyLevel.getEnemySpeed(), onKillMosquitoListener);
+            mosquitoList.add(mosquito);
+            componentsList.add(mosquito.actorImgView);
+        }
+    }
+
+    Mosquito.OnKillMosquitoListener onKillMosquitoListener = new Mosquito.OnKillMosquitoListener() {
+        @Override
+        public void onKill() {
+            Gdx.app.debug("onKill", "killed");
+            aliveMosquitoesCount -= 1;
+            if (aliveMosquitoesCount == 0){
+                gameSession.gameState = GameSession.END_OF_GAME;
+                textViewSessionTime.text = gameSession.getSessionTime();
+            }
+        }
+    };
+
 }
