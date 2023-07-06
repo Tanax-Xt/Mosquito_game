@@ -19,7 +19,7 @@ import com.mygdx.game.utils.MemoryLoader;
 
 import java.util.ArrayList;
 
-public class GameScreen implements Screen {
+public class        GameScreen implements Screen {
 
     ArrayList<UiComponent> componentsList;
     ArrayList<UiComponent> uiComponentsListEndOfGame;
@@ -30,6 +30,7 @@ public class GameScreen implements Screen {
     int aliveMosquitoesCount;
     GameSession gameSession;
 
+    TextView textViewAliveMosquitoesCount;
     TextButton returnButton;
     TextView textViewSessionTime;
 
@@ -46,6 +47,8 @@ public class GameScreen implements Screen {
         componentsList.add(new ImageView(0, 0, GameSettings.SCR_WIDTH,
                 GameSettings.SCR_HEIGHT, "backgrounds/gameBG.jpg"));
 
+        textViewAliveMosquitoesCount = new TextView(myGdxGame.commonFont.bitmapFont, "", 1620, 980);
+
         uiComponentsListEndOfGame.add(new Blackout());
         uiComponentsListEndOfGame.add(new TextView(myGdxGame.largeFont.bitmapFont,
                 "Our congratulations", -1, 900));
@@ -53,6 +56,7 @@ public class GameScreen implements Screen {
                 "Your time: ", 300, 700));
         textViewSessionTime = new TextView(myGdxGame.commonFont.bitmapFont, "", 700, 700);
         returnButton = new TextButton(myGdxGame.accentFont.bitmapFont, "Return home", 300, 500);
+        componentsList.add(textViewAliveMosquitoesCount);
         uiComponentsListEndOfGame.add(textViewSessionTime);
         uiComponentsListEndOfGame.add(returnButton);
     }
@@ -126,6 +130,8 @@ public class GameScreen implements Screen {
         mosquitoList = new ArrayList<>();
         aliveMosquitoesCount = difficultyLevel.getCountOfEnemies();
 
+        textViewAliveMosquitoesCount.text = "Alive: " + aliveMosquitoesCount;
+
         for (int i = 0; i < 9; i++)
             mosquitoTextureList.add(new Texture("tiles/mosq" + i + ".png"));
         Texture deadMosquitoTexture = new Texture("tiles/mosq10.png");
@@ -143,6 +149,7 @@ public class GameScreen implements Screen {
         public void onKill() {
             Gdx.app.debug("onKill", "killed");
             aliveMosquitoesCount -= 1;
+            textViewAliveMosquitoesCount.text = "Alive: " + aliveMosquitoesCount;
             if (aliveMosquitoesCount == 0){
                 gameSession.gameState = GameSession.END_OF_GAME;
                 textViewSessionTime.text = gameSession.getSessionTime();
