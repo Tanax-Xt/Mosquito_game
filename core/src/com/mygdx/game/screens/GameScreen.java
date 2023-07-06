@@ -151,7 +151,12 @@ public class        GameScreen implements Screen {
 
         for (int i = 0; i < aliveMosquitoesCount; i++) {
             Mosquito mosquito = new Mosquito(mosquitoTextureList, deadMosquitoTexture,
-                    difficultyLevel.getEnemySpeed(), onKillMosquitoListener);
+                    difficultyLevel.getEnemySpeed(), onKillMosquitoListener, difficultyLevel);
+
+            mosquito.actorImgView.width = mosquito.actorImgView.height *= difficultyLevel.getSizeChangeConst();
+            mosquito.width = mosquito.height *= difficultyLevel.getSizeChangeConst();
+
+            Gdx.app.debug("Show", String.valueOf(mosquito.actorImgView.x));
             mosquitoList.add(mosquito);
             componentsList.add(mosquito.actorImgView);
         }
