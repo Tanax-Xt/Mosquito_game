@@ -20,8 +20,8 @@ public class Character {
 
     protected int x;
     protected int y;
-    int width;
-    int height;
+    public int width;
+    public int height;
     protected float velocityX;
     protected float velocityY;
     protected int textureStage;
