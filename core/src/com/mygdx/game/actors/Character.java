@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.uiComponents.*;
+import com.mygdx.game.utils.DifficultyLevel;
 import com.mygdx.game.utils.GameSettings;
 
 import java.util.ArrayList;
@@ -19,16 +20,17 @@ public class Character {
 
     protected int x;
     protected int y;
-    protected int width;
-    protected int height;
+    int width;
+    int height;
     protected float velocityX;
     protected float velocityY;
     protected int textureStage;
 
     public boolean isAlive;
 
-    Character(ArrayList<Texture> texturesArray) {
+    Character(ArrayList<Texture> texturesArray, DifficultyLevel difficultyLevel) {
         this.texturesArray = texturesArray;
+//        width = height = (int) (MathUtils.random(100, 250) * difficultyLevel.getSizeChangeConst());
         width = height = MathUtils.random(100, 250);
         textureStage = MathUtils.random(0, texturesArray.size() - 1);
 

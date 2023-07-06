@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.uiComponents.ImageView;
 import com.mygdx.game.uiComponents.TextButton;
@@ -122,6 +123,7 @@ public class MenuScreen implements Screen {
         public void onClick() {
             Gdx.app.debug("onClick", "start button clicked");
             myGdxGame.setScreen(myGdxGame.gameScreen);
+            myGdxGame.gameScreen.gameSession.startTime = TimeUtils.millis();
 
         }
     };

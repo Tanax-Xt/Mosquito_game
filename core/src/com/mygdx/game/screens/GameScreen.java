@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
 
         for (int i = 0; i < aliveMosquitoesCount; i++) {
             Mosquito mosquito = new Mosquito(mosquitoTextureList, deadMosquitoTexture,
-                    difficultyLevel.getEnemySpeed(), onKillMosquitoListener);
+                    difficultyLevel.getEnemySpeed(), onKillMosquitoListener, difficultyLevel);
             mosquitoList.add(mosquito);
             componentsList.add(mosquito.actorImgView);
         }

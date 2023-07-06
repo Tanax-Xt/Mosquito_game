@@ -9,11 +9,11 @@ public class GameSession {
     public static final int GAME_OVER = 2;
 
     public int gameState;
-    long startTime;
+    public long startTime;
 
     public GameSession() {
         gameState = PLAY_GAME;
-        startTime = TimeUtils.millis();
+//        startTime = TimeUtils.millis();
     }
 
     public String getSessionTime() {
