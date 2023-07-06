@@ -56,9 +56,12 @@ public class        GameScreen implements Screen {
                 "Your time: ", 300, 700));
         textViewSessionTime = new TextView(myGdxGame.commonFont.bitmapFont, "", 700, 700);
         returnButton = new TextButton(myGdxGame.accentFont.bitmapFont, "Return home", 300, 500);
+
         componentsList.add(textViewAliveMosquitoesCount);
         uiComponentsListEndOfGame.add(textViewSessionTime);
         uiComponentsListEndOfGame.add(returnButton);
+
+        returnButton.setOnClickListener(onReturnButtonClickListener);
     }
 
     @Override
@@ -95,6 +98,16 @@ public class        GameScreen implements Screen {
         if (gameSession.gameState == GameSession.END_OF_GAME) {
             for (UiComponent component : uiComponentsListEndOfGame) {
                 component.draw(myGdxGame.batch);
+
+
+            }
+            if (Gdx.input.justTouched()) {
+                // add code
+                Vector3 vector3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                vector3 = myGdxGame.camera.unproject(vector3);
+                for (UiComponent component : uiComponentsListEndOfGame) {
+                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
+                }
             }
         }
 
@@ -157,4 +170,13 @@ public class        GameScreen implements Screen {
         }
     };
 
+    private UiComponent.OnClickListener onReturnButtonClickListener = new UiComponent.OnClickListener() {
+        @Override
+        public void onClick() {
+
+            Gdx.app.debug("onClicked", "onReturnButtonClicked");
+            myGdxGame.setScreen(myGdxGame.menuScreen);
+
+        }
+    };
 }
