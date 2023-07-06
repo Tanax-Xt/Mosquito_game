@@ -28,6 +28,7 @@ public class        GameScreen implements Screen {
     MyGdxGame myGdxGame;
 
     int aliveMosquitoesCount;
+    int mosquitoesQuantity;
     GameSession gameSession;
 
     TextView textViewAliveMosquitoesCount;
@@ -47,7 +48,7 @@ public class        GameScreen implements Screen {
         componentsList.add(new ImageView(0, 0, GameSettings.SCR_WIDTH,
                 GameSettings.SCR_HEIGHT, "backgrounds/gameBG.jpg"));
 
-        textViewAliveMosquitoesCount = new TextView(myGdxGame.commonFont.bitmapFont, "", 1620, 980);
+        textViewAliveMosquitoesCount = new TextView(myGdxGame.commonFont.bitmapFont, "", 1420, 980);
 
         uiComponentsListEndOfGame.add(new Blackout());
         uiComponentsListEndOfGame.add(new TextView(myGdxGame.largeFont.bitmapFont,
@@ -142,8 +143,11 @@ public class        GameScreen implements Screen {
     void loadMosquitoes(DifficultyLevel difficultyLevel) {
         mosquitoList = new ArrayList<>();
         aliveMosquitoesCount = difficultyLevel.getCountOfEnemies();
+        mosquitoesQuantity = aliveMosquitoesCount;
 
-        textViewAliveMosquitoesCount.text = "Alive: " + aliveMosquitoesCount;
+//        int live = difficultyLevel.getCountOfEnemies() - aliveMosquitoesCount;
+
+        textViewAliveMosquitoesCount.text = "Mosquitoes alive: " + aliveMosquitoesCount + " / " + mosquitoesQuantity;
 
         for (int i = 0; i < 9; i++)
             mosquitoTextureList.add(new Texture("tiles/mosq" + i + ".png"));
@@ -166,7 +170,7 @@ public class        GameScreen implements Screen {
         public void onKill() {
             Gdx.app.debug("onKill", "killed");
             aliveMosquitoesCount -= 1;
-            textViewAliveMosquitoesCount.text = "Alive: " + aliveMosquitoesCount;
+            textViewAliveMosquitoesCount.text = "Mosquitoes alive: " + aliveMosquitoesCount + " / " + mosquitoesQuantity;
             if (aliveMosquitoesCount == 0){
                 gameSession.gameState = GameSession.END_OF_GAME;
                 textViewSessionTime.text = gameSession.getSessionTime();
