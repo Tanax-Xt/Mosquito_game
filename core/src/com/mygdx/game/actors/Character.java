@@ -30,10 +30,8 @@ public class Character {
 
     Character(ArrayList<Texture> texturesArray, DifficultyLevel difficultyLevel) {
         this.texturesArray = texturesArray;
-//        width = height = (int) (MathUtils.random(100, 250) * difficultyLevel.getSizeChangeConst());
         width = height = MathUtils.random(100, 250);
         textureStage = MathUtils.random(0, texturesArray.size() - 1);
-
         actorImgView = new ImageView(x, y, width, height, texturesArray.get(textureStage));
         isAlive = true;
     }
