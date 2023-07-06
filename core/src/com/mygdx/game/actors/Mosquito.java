@@ -1,6 +1,5 @@
 package com.mygdx.game.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.uiComponents.UiComponent;
@@ -30,7 +29,6 @@ public class Mosquito extends Character {
         this.deadMosquitoTexture = deadMosquitoTexture;
         this.onKillMosquitoListener = onKillMosquitoListener;
         actorImgView.setOnClickListener(mosquitoOnClicked);
-
     }
 
     UiComponent.OnClickListener mosquitoOnClicked = new UiComponent.OnClickListener() {

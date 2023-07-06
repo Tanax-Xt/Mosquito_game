@@ -38,7 +38,6 @@ public class MenuScreen implements Screen {
         this.componentsList = componentsList;
     }
 
-
     public MenuScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
         componentsList = new ArrayList<>();
@@ -118,18 +117,17 @@ public class MenuScreen implements Screen {
 
     }
 
-    private UiComponent.OnClickListener startButtonOnClickListener = new UiComponent.OnClickListener() {
+    private final UiComponent.OnClickListener startButtonOnClickListener = new UiComponent.OnClickListener() {
         @Override
         public void onClick() {
             Gdx.app.debug("onClick", "start button clicked");
             myGdxGame.setScreen(myGdxGame.gameScreen);
-            myGdxGame.gameScreen.gameSession.startTime = TimeUtils.millis();
-
+//            myGdxGame.gameScreen.gameSession.startTime = TimeUtils.millis();
         }
     };
 
 
-    private UiComponent.OnClickListener aboutButtonOnClickListener = new UiComponent.OnClickListener() {
+    private final UiComponent.OnClickListener aboutButtonOnClickListener = new UiComponent.OnClickListener() {
         @Override
         public void onClick() {
             Gdx.app.debug("onClicked", "onButtonAboutClicked");
@@ -137,7 +135,7 @@ public class MenuScreen implements Screen {
         }
     };
 
-    private UiComponent.OnClickListener settingButtonOnClickListener = new UiComponent.OnClickListener() {
+    private final UiComponent.OnClickListener settingButtonOnClickListener = new UiComponent.OnClickListener() {
         @Override
         public void onClick() {
             Gdx.app.debug("onClicked", "onButtonSettingsClicked");
@@ -145,7 +143,7 @@ public class MenuScreen implements Screen {
         }
     };
 
-    private UiComponent.OnClickListener exitButtonOnClickListener = new UiComponent.OnClickListener() {
+    private final UiComponent.OnClickListener exitButtonOnClickListener = new UiComponent.OnClickListener() {
         @Override
         public void onClick() {
             Gdx.app.debug("onClicked", "onButtonExitClicked");

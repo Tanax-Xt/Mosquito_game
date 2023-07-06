@@ -17,7 +17,6 @@ public abstract class UiComponent {
         this(x, y);
         this.width = wight;
         this.height = height;
-
     }
 
     public UiComponent(int x, int y) {

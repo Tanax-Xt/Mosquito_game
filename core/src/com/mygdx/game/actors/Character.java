@@ -45,6 +45,5 @@ public class Character {
 
         textureStage = (textureStage + 1) % texturesArray.size();
         actorImgView.setImgTexture(texturesArray.get(textureStage));
-
     }
 }
