@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
@@ -19,7 +20,7 @@ import com.mygdx.game.utils.MemoryLoader;
 
 import java.util.ArrayList;
 
-public class        GameScreen implements Screen {
+public class GameScreen implements Screen {
 
     ArrayList<UiComponent> componentsList;
     ArrayList<UiComponent> uiComponentsListEndOfGame;
@@ -46,7 +47,7 @@ public class        GameScreen implements Screen {
         uiComponentsListEndOfGame = new ArrayList<>();
         mosquitoList = new ArrayList<>();
         componentsList.add(new ImageView(0, 0, GameSettings.SCR_WIDTH,
-                GameSettings.SCR_HEIGHT, "backgrounds/gameBG.jpg"));
+                GameSettings.SCR_HEIGHT, "backgrounds/gameBG"+ MathUtils.random(0, 4) +".jpg"));
 
         textViewAliveMosquitoesCount = new TextView(myGdxGame.commonFont.bitmapFont, "", 1420, 980);
 
