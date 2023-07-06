@@ -155,7 +155,6 @@ public class        GameScreen implements Screen {
 
             mosquito.actorImgView.width = mosquito.actorImgView.height *= difficultyLevel.getSizeChangeConst();
             mosquito.width = mosquito.height *= difficultyLevel.getSizeChangeConst();
-
             Gdx.app.debug("Show", String.valueOf(mosquito.actorImgView.x));
             mosquitoList.add(mosquito);
             componentsList.add(mosquito.actorImgView);
