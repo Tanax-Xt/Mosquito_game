@@ -23,8 +23,8 @@ public class Mosquito extends Character {
 //        Gdx.app.debug("Mosquito", String.valueOf(xx));
 //        x = GameSettings.SCR_WIDTH / 2 - width / 2;
 //        y = GameSettings.SCR_HEIGHT / 2 - height / 2;
-        x = MathUtils.random(1, GameSettings.SCR_WIDTH - 1);
-        y = MathUtils.random(1, GameSettings.SCR_HEIGHT - 1);
+        x = MathUtils.random(1, GameSettings.SCR_WIDTH - GameSettings.SCR_WIDTH / 5);
+        y = MathUtils.random(1, GameSettings.SCR_HEIGHT - GameSettings.SCR_HEIGHT / 5);
         velocityX = MathUtils.random(-velocity, velocity);
         velocityY = (float) ((MathUtils.random(0, 1) - 0.5) * 2 * Math.sqrt(velocity * velocity - velocityX * velocityX));
         this.deadMosquitoTexture = deadMosquitoTexture;
