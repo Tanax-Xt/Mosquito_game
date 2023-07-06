@@ -28,7 +28,7 @@ public class Character {
 
     public boolean isAlive;
 
-    Character(ArrayList<Texture> texturesArray, DifficultyLevel difficultyLevel) {
+    Character(ArrayList<Texture> texturesArray) {
         this.texturesArray = texturesArray;
         width = height = MathUtils.random(100, 250);
         textureStage = MathUtils.random(0, texturesArray.size() - 1);

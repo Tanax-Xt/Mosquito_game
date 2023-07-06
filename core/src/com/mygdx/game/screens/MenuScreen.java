@@ -122,7 +122,6 @@ public class MenuScreen implements Screen {
         public void onClick() {
             Gdx.app.debug("onClick", "start button clicked");
             myGdxGame.setScreen(myGdxGame.gameScreen);
-//            myGdxGame.gameScreen.gameSession.startTime = TimeUtils.millis();
         }
     };
 
