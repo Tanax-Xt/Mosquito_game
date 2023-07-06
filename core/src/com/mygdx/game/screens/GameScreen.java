@@ -180,6 +180,7 @@ public class        GameScreen implements Screen {
         public void onClick() {
 
             Gdx.app.debug("onClicked", "onReturnButtonClicked");
+            myGdxGame.gameScreen = new GameScreen(myGdxGame);
             myGdxGame.setScreen(myGdxGame.menuScreen);
 
         }
