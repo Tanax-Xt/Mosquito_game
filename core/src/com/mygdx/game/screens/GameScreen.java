@@ -49,8 +49,7 @@ public class GameScreen implements Screen {
         mosquitoList = new ArrayList<>();
         beeList = new ArrayList<>();
 
-        progressBar = new ProgressBar(700, 30,
-                MemoryLoader.loadDifficultyLevel().getUserHitPoints(), 100, 30, "Hit points", myGdxGame.commonFont.bitmapFont);
+        progressBar = new ProgressBar(700, 30, MemoryLoader.loadDifficultyLevel().getUserHitPoints(), 100, 30, "Hit points", myGdxGame.commonFont.bitmapFont);
 
         textViewAliveMosquitoesCount = new TextView(myGdxGame.commonFont.bitmapFont, "", 1420, 980);
         textViewSessionTime = new TextView(myGdxGame.commonFont.bitmapFont, "", 700, 700);
@@ -64,17 +63,14 @@ public class GameScreen implements Screen {
         pauseTextContinue.setOnClickListener(onContinueGameClickListener);
 
 
-        componentsList.add(new ImageView(0, 0, GameSettings.SCR_WIDTH,
-                GameSettings.SCR_HEIGHT, "backgrounds/gameBG" + MathUtils.random(0, 4) + ".jpg"));
+        componentsList.add(new ImageView(0, 0, GameSettings.SCR_WIDTH, GameSettings.SCR_HEIGHT, "backgrounds/gameBG" + MathUtils.random(0, 4) + ".jpg"));
         componentsList.add(progressBar);
         componentsList.add(textViewAliveMosquitoesCount);
         componentsList.add(pauseButton);
 
         uiComponentsListEndOfGame.add(new Blackout());
-        uiComponentsListEndOfGame.add(new TextView(myGdxGame.largeFont.bitmapFont,
-                "Our congratulations", -1, 900));
-        uiComponentsListEndOfGame.add(new TextView(myGdxGame.commonFont.bitmapFont,
-                "Your time: ", 300, 700));
+        uiComponentsListEndOfGame.add(new TextView(myGdxGame.largeFont.bitmapFont, "Our congratulations", -1, 900));
+        uiComponentsListEndOfGame.add(new TextView(myGdxGame.commonFont.bitmapFont, "Your time: ", 300, 700));
         uiComponentsListEndOfGame.add(textViewSessionTime);
         uiComponentsListEndOfGame.add(returnButton);
 
@@ -84,8 +80,7 @@ public class GameScreen implements Screen {
         uiComponentsListPauseOfGame.add(returnButton);
 
         uiComponentsListGameOver.add(new Blackout());
-        uiComponentsListGameOver.add(new TextView(myGdxGame.largeFont.bitmapFont,
-                "Game over", -1, 900));
+        uiComponentsListGameOver.add(new TextView(myGdxGame.largeFont.bitmapFont, "Game over", -1, 900));
         uiComponentsListGameOver.add(returnButton);
 
         returnButton.setOnClickListener(onReturnButtonClickListener);
@@ -102,7 +97,7 @@ public class GameScreen implements Screen {
         loadActors(MemoryLoader.loadDifficultyLevel());
     }
 
-//    @Override
+    //    @Override
 //    public void render(float delta) {
 ////        Gdx.app.debug("Render", "Render");
 //        if (Gdx.input.justTouched()) {
@@ -175,6 +170,8 @@ public class GameScreen implements Screen {
             for (Bee bee : beeList)
                 bee.update();
         }
+        progressBar.setValue(gameSession.hitPointsLeft);
+
         ScreenUtils.clear(0, 0, 0, 1);
         myGdxGame.camera.update();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
@@ -184,19 +181,26 @@ public class GameScreen implements Screen {
             component.draw(myGdxGame.batch);
         }
 
-        if (gameSession.getGameState() == GameSession.END_OF_GAME) {
-            for (UiComponent component : uiComponentsListEndOfGame) {
+        if (gameSession.getGameState() == GameSession.PLAY_GAME) {
+            for (UiComponent component : componentsList)
                 component.draw(myGdxGame.batch);
-            }
-            if (Gdx.input.justTouched()) {
-                // add code
-                hitHandler(uiComponentsListEndOfGame);
-            }
         }
-        if (gameSession.getGameState() == GameSession.GAME_OVER) {
-            if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
+
+        else if (gameSession.getGameState() == GameSession.END_OF_GAME) {
+            for (UiComponent component : uiComponentsListEndOfGame)
+                component.draw(myGdxGame.batch);
+
+            if (Gdx.input.justTouched()) hitHandler(uiComponentsListEndOfGame);
+
+        } else if (gameSession.getGameState() == GameSession.GAME_OVER) {
+            if (Gdx.input.justTouched()) hitHandler(uiComponentsListGameOver);
 
             for (UiComponent component : uiComponentsListGameOver) {
+                component.draw(myGdxGame.batch);
+            }
+        } else if (gameSession.getGameState() == GameSession.PAUSE_GAME) {
+            if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
+            for (UiComponent component : uiComponentsListPauseOfGame) {
                 component.draw(myGdxGame.batch);
             }
         }
@@ -252,7 +256,7 @@ public class GameScreen implements Screen {
             mosquitoList.add(mosquito);
 
             if (i % 4 == 0) {
-                Bee bee = new Bee(beeTextureList, difficultyLevel.getEnemySpeed(), onHitButterflyListener);
+                Bee bee = new Bee(beeTextureList, difficultyLevel.getEnemySpeed(), onHitBeeListener);
                 beeList.add(bee);
                 componentsList.add(bee.actorImgView);
             }
@@ -301,7 +305,7 @@ public class GameScreen implements Screen {
         }
     };
 
-    private Bee.OnHitBeeListener onHitButterflyListener = new Bee.OnHitBeeListener() {
+    private Bee.OnHitBeeListener onHitBeeListener = new Bee.OnHitBeeListener() {
         @Override
         public void onHit() {
             if (gameSession.getGameState() == GameSession.PLAY_GAME) {
