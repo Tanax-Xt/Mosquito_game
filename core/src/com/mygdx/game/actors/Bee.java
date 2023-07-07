@@ -14,7 +14,6 @@ public class Bee extends Character{
     public Bee(ArrayList<Texture> texturesArray, float velocity,
                OnHitBeeListener onHitButterflyListener) {
         super(texturesArray);
-        Gdx.app.debug("Mosquito", String.valueOf(velocity));
         x = GameSettings.SCR_WIDTH / 2 - width / 2;
         y = GameSettings.SCR_HEIGHT / 2 - height / 2;
         velocityX = MathUtils.random(-velocity, velocity);
