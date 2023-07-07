@@ -2,6 +2,7 @@ package com.mygdx.game.uiComponents;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.utils.GameSettings;
 
 public abstract class UiComponent {
@@ -26,9 +27,9 @@ public abstract class UiComponent {
         isVisible = true;
     }
 
-    public void draw(SpriteBatch spriteBatch) {
+    public void draw(SpriteBatch spriteBatch) {}
+    public void draw(MyGdxGame myGdxGame) {};
 
-    }
 
     public boolean isHit(int touchX, int touchY) {
         Gdx.app.debug("is touch", "touch");

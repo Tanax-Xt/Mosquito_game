@@ -15,8 +15,8 @@ public class Butterfly extends Character {
     public Butterfly(ArrayList<Texture> texturesArray, Texture deadMosquitoTexture, float velocity,
                     Mosquito.OnKillMosquitoListener onKillMosquitoListener, DifficultyLevel difficultyLevel) {
         super(texturesArray);
-        actorImgView.width = actorImgView.height *= difficultyLevel.getSizeChangeConst();
-        width = height *= difficultyLevel.getSizeChangeConst();
+//        actorImgView.width = actorImgView.height *= difficultyLevel.getSizeChangeConst();
+//        width = height *= difficultyLevel.getSizeChangeConst();
 
         x = MathUtils.random(1, GameSettings.SCR_WIDTH - GameSettings.SCR_WIDTH / 2);
         y = MathUtils.random(1, GameSettings.SCR_HEIGHT - GameSettings.SCR_HEIGHT / 2);

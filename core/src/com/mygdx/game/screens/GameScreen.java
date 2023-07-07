@@ -12,6 +12,7 @@ import com.mygdx.game.actors.Mosquito;
 import com.mygdx.game.ui.TextView;
 import com.mygdx.game.uiComponents.Blackout;
 import com.mygdx.game.uiComponents.ImageView;
+import com.mygdx.game.uiComponents.ProgressBar;
 import com.mygdx.game.uiComponents.TextButton;
 import com.mygdx.game.uiComponents.UiComponent;
 import com.mygdx.game.utils.DifficultyLevel;
@@ -39,6 +40,7 @@ public class GameScreen implements Screen {
     TextView textViewSessionTime;
     TextView pauseTextInfo;
     TextView pauseTextContinue;
+    ProgressBar progressBar;
 
     public GameScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
@@ -51,6 +53,9 @@ public class GameScreen implements Screen {
         uiComponentsListPauseOfGame = new ArrayList<>();
         mosquitoList = new ArrayList<>();
         butterflyList = new ArrayList<>();
+
+        progressBar = new ProgressBar(700, 30,
+                MemoryLoader.loadDifficultyLevel().getUserHitPoints(), 100, 30, "Hit points", myGdxGame.commonFont.bitmapFont);
 
         textViewAliveMosquitoesCount = new TextView(myGdxGame.commonFont.bitmapFont, "", 1420, 980);
         textViewSessionTime = new TextView(myGdxGame.commonFont.bitmapFont, "", 700, 700);
