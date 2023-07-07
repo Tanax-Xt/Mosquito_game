@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.actors.Butterfly;
+import com.mygdx.game.actors.Bee;
 import com.mygdx.game.actors.Mosquito;
 import com.mygdx.game.ui.TextView;
 import com.mygdx.game.uiComponents.Blackout;
@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
     ArrayList<UiComponent> uiComponentsListPauseOfGame;
     ArrayList<Texture> mosquitoTextureList;
     ArrayList<Mosquito> mosquitoList;
-    ArrayList<Butterfly> butterflyList;
+    ArrayList<Bee> beeList;
     boolean isSoundPlay;
     MyGdxGame myGdxGame;
     int aliveMosquitoesCount;
@@ -45,6 +45,7 @@ public class GameScreen implements Screen {
     ProgressBar progressBar;
 
     public GameScreen(MyGdxGame myGdxGame) {
+        SoundExecutor.playBackSound();
         this.myGdxGame = myGdxGame;
 
         Gdx.app.debug("GameScreen", "constructor");
@@ -54,7 +55,7 @@ public class GameScreen implements Screen {
         uiComponentsListEndOfGame = new ArrayList<>();
         uiComponentsListPauseOfGame = new ArrayList<>();
         mosquitoList = new ArrayList<>();
-        butterflyList = new ArrayList<>();
+        beeList = new ArrayList<>();
 
         progressBar = new ProgressBar(700, 30,
                 MemoryLoader.loadDifficultyLevel().getUserHitPoints(), 100, 30, "Hit points", myGdxGame.commonFont.bitmapFont);
@@ -110,7 +111,7 @@ public class GameScreen implements Screen {
                 if (mosquito.isAlive) mosquito.update();
             }
 
-            for (Butterfly butterfly: butterflyList) {
+            for (Bee butterfly: beeList) {
                 butterfly.update();
             }
         }
