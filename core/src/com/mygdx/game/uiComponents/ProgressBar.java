@@ -3,6 +3,7 @@ package com.mygdx.game.uiComponents;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.MyGdxGame;
 
 public class ProgressBar extends UiComponent {
@@ -37,10 +38,10 @@ public class ProgressBar extends UiComponent {
     }
 
     @Override
-    public void draw(MyGdxGame myGdxGame) {
-        myGdxGame.batch.draw(backFullBarTexture, x, y, maxWidth, height);
-        myGdxGame.batch.draw(frontBarTexture, x, y, width, height);
-        bitmapFont.draw(myGdxGame.batch, barTitle, x + maxWidth + 15, y + 40);
+    public void draw(SpriteBatch batch) {
+        batch.draw(backFullBarTexture, x, y, maxWidth, height);
+        batch.draw(frontBarTexture, x, y, width, height);
+        bitmapFont.draw(batch, barTitle, x + maxWidth + 15, y + 40);
     }
 
     void initBars() {

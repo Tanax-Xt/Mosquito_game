@@ -28,8 +28,6 @@ public abstract class UiComponent {
     }
 
     public void draw(SpriteBatch spriteBatch) {}
-    public void draw(MyGdxGame myGdxGame) {};
-
 
     public boolean isHit(int touchX, int touchY) {
         Gdx.app.debug("is touch", "touch");
