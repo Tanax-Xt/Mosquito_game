@@ -128,14 +128,15 @@ public class GameScreen implements Screen {
             }
         }
 
-        for (Mosquito mosquito : mosquitoList) {
-            if (mosquito.isAlive) mosquito.update();
+        if (gameSession.getGameState() != GameSession.PAUSE_GAME) {
+            for (Mosquito mosquito : mosquitoList) {
+                if (mosquito.isAlive) mosquito.update();
+            }
+
+            for (Bee bee : beeList) bee.update();
+            progressBar.setValue(gameSession.hitPointsLeft);
         }
 
-        for (Bee bee : beeList)
-            bee.update();
-
-        progressBar.setValue(gameSession.hitPointsLeft);
 
         ScreenUtils.clear(0, 0, 0, 1);
         myGdxGame.camera.update();
@@ -250,8 +251,8 @@ public class GameScreen implements Screen {
         @Override
         public void onClick() {
             Gdx.app.debug("onClicked", "onPauseButtonClicked");
-            if (gameSession.getGameState() != GameSession.END_OF_GAME)
-                gameSession.setGameState(GameSession.PAUSE_GAME);
+//            if (gameSession.getGameState() != GameSession.END_OF_GAME)
+//                gameSession.setGameState(GameSession.PAUSE_GAME);
         }
     };
 

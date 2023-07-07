@@ -3,7 +3,6 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameSession {
-
     public static final int PLAY_GAME = 0;
     public static final int END_OF_GAME = 1;
     public static final int GAME_OVER = 2;
