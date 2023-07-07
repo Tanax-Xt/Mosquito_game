@@ -14,7 +14,7 @@ public class Mosquito extends Character {
     OnKillMosquitoListener onKillMosquitoListener;
 
     public Mosquito(ArrayList<Texture> texturesArray, Texture deadMosquitoTexture, float velocity,
-                    OnKillMosquitoListener onKillMosquitoListener, DifficultyLevel difficultyLevel) {
+                    OnKillMosquitoListener onKillMosquitoListener) {
         super(texturesArray);
         x = MathUtils.random(1, GameSettings.SCR_WIDTH - GameSettings.SCR_WIDTH / 5);
         y = MathUtils.random(1, GameSettings.SCR_HEIGHT - GameSettings.SCR_HEIGHT / 5);
