@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class SoundExecutor {
 
-    static Music backSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
+    static Music backSound = Gdx.audio.newMusic(Gdx.files.internal("audio/background.mp3"));
     static Sound[] mosquitoesSounds = {
-            Gdx.audio.newSound(Gdx.files.internal("sounds/mosq0.mp3")),
-            Gdx.audio.newSound(Gdx.files.internal("sounds/mosq1.mp3"))
+            Gdx.audio.newSound(Gdx.files.internal("audio/mosq0.mp3")),
+            Gdx.audio.newSound(Gdx.files.internal("audio/mosq1.mp3"))
     };
 
     public static void playBackSound() {
