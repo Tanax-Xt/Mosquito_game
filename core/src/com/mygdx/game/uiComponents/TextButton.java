@@ -23,6 +23,5 @@ public class TextButton extends UiComponent {
     public void draw(SpriteBatch spriteBatch) {
         // add button
         if (isVisible) font.draw(spriteBatch, buttonText, x, y);
-
     }
 }
