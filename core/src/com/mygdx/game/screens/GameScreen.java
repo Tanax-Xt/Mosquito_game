@@ -102,41 +102,79 @@ public class GameScreen implements Screen {
         loadActors(MemoryLoader.loadDifficultyLevel());
     }
 
+//    @Override
+//    public void render(float delta) {
+////        Gdx.app.debug("Render", "Render");
+//        if (Gdx.input.justTouched()) {
+//            Vector3 vector3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+//            vector3 = myGdxGame.camera.unproject(vector3);
+//            if (gameSession.gameState == GameSession.PLAY_GAME) {
+//                for (UiComponent component : componentsList) {
+//                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
+//                }
+//            } else if (gameSession.gameState == GameSession.GAME_OVER) {
+//                for (UiComponent component : uiComponentsListGameOver) {
+//                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
+//                }
+//            } else if (gameSession.gameState == GameSession.END_OF_GAME) {
+//                for (UiComponent component : uiComponentsListEndOfGame) {
+//                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
+//                }
+//            } else if (gameSession.gameState == GameSession.PAUSE_GAME) {
+////                if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
+//
+//                Gdx.app.debug("pause", "pause");
+//                for (UiComponent component : uiComponentsListPauseOfGame) {
+//                    if (component.isVisible) {
+//                        component.isHit((int) vector3.x, (int) vector3.y);
+//                        for (UiComponent xcomponent : uiComponentsListPauseOfGame) {
+//                            xcomponent.draw(myGdxGame.batch);
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        for (Mosquito mosquito : mosquitoList) {
+//            if (mosquito.isAlive) mosquito.update();
+//        }
+//
+//        for (Bee bee : beeList)
+//            bee.update();
+//
+//        progressBar.setValue(gameSession.hitPointsLeft);
+//
+//        ScreenUtils.clear(0, 0, 0, 1);
+//        myGdxGame.camera.update();
+//        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+//        myGdxGame.batch.begin();
+//
+//        for (UiComponent component : componentsList) {
+//            component.draw(myGdxGame.batch);
+//        }
+//        if (gameSession.getGameState() == GameSession.END_OF_GAME) {
+//            for (UiComponent component : uiComponentsListEndOfGame) {
+//                component.draw(myGdxGame.batch);
+//            }
+//        }
+//        if (gameSession.getGameState() == GameSession.GAME_OVER) {
+//            for (UiComponent component : uiComponentsListGameOver) {
+//                component.draw(myGdxGame.batch);
+//            }
+//        }
+//        myGdxGame.batch.end();
+//    }
     @Override
     public void render(float delta) {
 //        Gdx.app.debug("Render", "Render");
-        if (Gdx.input.justTouched()) {
-            Vector3 vector3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            vector3 = myGdxGame.camera.unproject(vector3);
-            if (gameSession.gameState == GameSession.PLAY_GAME) {
-                for (UiComponent component : componentsList) {
-                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
-                }
-            } else if (gameSession.gameState == GameSession.GAME_OVER) {
-                for (UiComponent component : uiComponentsListGameOver) {
-                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
-                }
-            } else if (gameSession.gameState == GameSession.END_OF_GAME) {
-                for (UiComponent component : uiComponentsListEndOfGame) {
-                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
-                }
-            } else if (gameSession.gameState == GameSession.PAUSE_GAME) {
-                if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
-                for (UiComponent component : uiComponentsListPauseOfGame) {
-                    component.draw(myGdxGame.batch);
-                }
-            }
+        if (gameSession.getGameState() != GameSession.PAUSE_GAME) {
+            if (Gdx.input.justTouched()) hitHandler(componentsList);
+            for (Mosquito mosquito : mosquitoList)
+                if (mosquito.isAlive) mosquito.update();
+            for (Bee bee : beeList)
+                bee.update();
         }
-
-        for (Mosquito mosquito : mosquitoList) {
-            if (mosquito.isAlive) mosquito.update();
-        }
-
-        for (Bee bee : beeList)
-            bee.update();
-
-        progressBar.setValue(gameSession.hitPointsLeft);
-
         ScreenUtils.clear(0, 0, 0, 1);
         myGdxGame.camera.update();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
@@ -145,16 +183,24 @@ public class GameScreen implements Screen {
         for (UiComponent component : componentsList) {
             component.draw(myGdxGame.batch);
         }
+
         if (gameSession.getGameState() == GameSession.END_OF_GAME) {
             for (UiComponent component : uiComponentsListEndOfGame) {
                 component.draw(myGdxGame.batch);
             }
+            if (Gdx.input.justTouched()) {
+                // add code
+                hitHandler(uiComponentsListEndOfGame);
+            }
         }
         if (gameSession.getGameState() == GameSession.GAME_OVER) {
+            if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
+
             for (UiComponent component : uiComponentsListGameOver) {
                 component.draw(myGdxGame.batch);
             }
         }
+
         myGdxGame.batch.end();
     }
 
