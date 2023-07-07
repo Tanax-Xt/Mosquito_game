@@ -2,7 +2,6 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -29,7 +28,9 @@ public class GameScreen implements Screen {
     ArrayList<UiComponent> componentsList;
     ArrayList<UiComponent> uiComponentsListEndOfGame;
     ArrayList<UiComponent> uiComponentsListPauseOfGame;
+    ArrayList<UiComponent> uiComponentsListGameOver;
     ArrayList<Texture> mosquitoTextureList;
+    ArrayList<Texture> beeTextureList;
     ArrayList<Mosquito> mosquitoList;
     ArrayList<Bee> beeList;
     boolean isSoundPlay;
@@ -54,6 +55,7 @@ public class GameScreen implements Screen {
         componentsList = new ArrayList<>();
         uiComponentsListEndOfGame = new ArrayList<>();
         uiComponentsListPauseOfGame = new ArrayList<>();
+        uiComponentsListGameOver = new ArrayList<>();
         mosquitoList = new ArrayList<>();
         beeList = new ArrayList<>();
 
@@ -71,8 +73,9 @@ public class GameScreen implements Screen {
         pauseTextContinue = new TextView(myGdxGame.largeFont.bitmapFont, "Continue", 300, 650);
         pauseTextContinue.setOnClickListener(onContinueGameClickListener);
 
+        componentsList.add(progressBar);
         componentsList.add(new ImageView(0, 0, GameSettings.SCR_WIDTH,
-                GameSettings.SCR_HEIGHT, "backgrounds/gameBG" + MathUtils.random(0, 4) +".jpg"));
+                GameSettings.SCR_HEIGHT, "backgrounds/gameBG" + MathUtils.random(0, 4) + ".jpg"));
         componentsList.add(textViewAliveMosquitoesCount);
         componentsList.add(pauseButton);
 
@@ -89,6 +92,11 @@ public class GameScreen implements Screen {
         uiComponentsListPauseOfGame.add(pauseTextContinue);
         uiComponentsListPauseOfGame.add(returnButton);
 
+        uiComponentsListGameOver.add(new Blackout());
+        uiComponentsListGameOver.add(new TextView(myGdxGame.largeFont.bitmapFont,
+                "Game over", -1, 900));
+        uiComponentsListGameOver.add(returnButton);
+
         returnButton.setOnClickListener(onReturnButtonClickListener);
     }
 
@@ -99,49 +107,112 @@ public class GameScreen implements Screen {
         isSoundPlay = MemoryLoader.loadMusicState();
 
         gameSession.setGameState(GameSession.PLAY_GAME);
-        loadMosquitoes(MemoryLoader.loadDifficultyLevel());
+        progressBar.setMaxValue(MemoryLoader.loadDifficultyLevel().getUserHitPoints());
+        loadActors(MemoryLoader.loadDifficultyLevel());
     }
 
     @Override
     public void render(float delta) {
-        if (gameSession.getGameState() != GameSession.PAUSE_GAME) {
-            if (Gdx.input.justTouched()) hitHandler(componentsList);
 
-            for (Mosquito mosquito : mosquitoList) {
-                if (mosquito.isAlive) mosquito.update();
-            }
+        if (Gdx.input.justTouched()) {
+            Vector3 vector3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            vector3 = myGdxGame.camera.unproject(vector3);
+            if (gameSession.getGameState() == GameSession.PLAY_GAME) {
+                for (UiComponent component : componentsList) {
+                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
+                }
+            } else if (gameSession.getGameState() == GameSession.GAME_OVER) {
+                for (UiComponent component : uiComponentsListGameOver) {
+                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
+                }
+            } else if (gameSession.getGameState() == GameSession.END_OF_GAME) {
+                for (UiComponent component : uiComponentsListEndOfGame) {
+                    if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
+                }
+            } else if (gameSession.getGameState() == GameSession.PAUSE_GAME) {
+                if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
 
-            for (Bee butterfly: beeList) {
-                butterfly.update();
+                for (UiComponent component : uiComponentsListPauseOfGame) {
+                    component.draw(myGdxGame.batch);
+                }
             }
         }
+
+        for (Mosquito mosquito : mosquitoList) {
+            if (mosquito.isAlive) mosquito.update();
+        }
+
+        for (Bee bee : beeList)
+            bee.update();
+
+        progressBar.setValue(gameSession.hitPointsLeft);
 
         ScreenUtils.clear(0, 0, 0, 1);
         myGdxGame.camera.update();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         myGdxGame.batch.begin();
 
-        for (UiComponent component : componentsList) component.draw(myGdxGame.batch);
+        for (UiComponent component : componentsList) {
+            component.draw(myGdxGame);
+        }
 
         if (gameSession.getGameState() == GameSession.END_OF_GAME) {
-            for (UiComponent component : uiComponentsListEndOfGame) component.draw(myGdxGame.batch);
-
-            if (Gdx.input.justTouched()) {
-                // add code
-                hitHandler(uiComponentsListEndOfGame);
+            for (UiComponent component : uiComponentsListEndOfGame) {
+                component.draw(myGdxGame);
             }
         }
 
-        if (gameSession.getGameState() == GameSession.PAUSE_GAME) {
-            if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
-
-            for (UiComponent component: uiComponentsListPauseOfGame) {
-                component.draw(myGdxGame.batch);
+        if (gameSession.getGameState() == GameSession.GAME_OVER) {
+            for (UiComponent component : uiComponentsListGameOver) {
+                component.draw(myGdxGame);
             }
         }
 
         myGdxGame.batch.end();
     }
+
+//    @Override
+//    public void render(float delta) {
+//        if (gameSession.getGameState() != GameSession.PAUSE_GAME) {
+//            if (Gdx.input.justTouched()) hitHandler(componentsList);
+//
+//            for (Mosquito mosquito : mosquitoList) {
+//                if (mosquito.isAlive) mosquito.update();
+//            }
+//
+//            for (Bee butterfly: beeList) {
+//                butterfly.update();
+//            }
+//        }
+//
+//        ScreenUtils.clear(0, 0, 0, 1);
+//        myGdxGame.camera.update();
+//        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+//        myGdxGame.batch.begin();
+//
+//        for (UiComponent component : componentsList) component.draw(myGdxGame.batch);
+//
+//        if (gameSession.getGameState() == GameSession.END_OF_GAME) {
+//            for (UiComponent component : uiComponentsListEndOfGame) component.draw(myGdxGame.batch);
+//
+//            if (Gdx.input.justTouched()) {
+//                // add code
+//                hitHandler(uiComponentsListEndOfGame);
+//            }
+//        }
+//
+//
+//
+//        if (gameSession.getGameState() == GameSession.PAUSE_GAME) {
+//            if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
+//
+//            for (UiComponent component: uiComponentsListPauseOfGame) {
+//                component.draw(myGdxGame.batch);
+//            }
+//        }
+//
+//        myGdxGame.batch.end();
+//    }
 
     @Override
     public void resize(int width, int height) {
@@ -168,25 +239,34 @@ public class GameScreen implements Screen {
 
     }
 
-    void loadMosquitoes(DifficultyLevel difficultyLevel) {
+    void loadActors(DifficultyLevel difficultyLevel) {
         mosquitoList = new ArrayList<>();
-        aliveMosquitoesCount = difficultyLevel.getCountOfEnemies();
+        beeList = new ArrayList<>();
+        mosquitoTextureList = new ArrayList<>();
+        beeTextureList = new ArrayList<>();
         mosquitoesQuantity = aliveMosquitoesCount;
 
 //        int live = difficultyLevel.getCountOfEnemies() - aliveMosquitoesCount;
 
         textViewAliveMosquitoesCount.text = "Mosquitoes alive: " + aliveMosquitoesCount + " / " + mosquitoesQuantity;
 
-        for (int i = 0; i < 9; i++) mosquitoTextureList.add(new Texture("tiles/mosq" + i + ".png"));
+        for (int i = 1; i <= 4; i++) beeTextureList.add(new Texture("tiles/bee" + i + ".png"));
+
+        for (int i = 0; i <= 9; i++)
+            mosquitoTextureList.add(new Texture("tiles/mosq" + i + ".png"));
         Texture deadMosquitoTexture = new Texture("tiles/mosq10.png");
 
         for (int i = 0; i < aliveMosquitoesCount; i++) {
             Mosquito mosquito = new Mosquito(mosquitoTextureList, deadMosquitoTexture, difficultyLevel.getEnemySpeed(), onKillMosquitoListener, difficultyLevel);
-
-//            mosquito.actorImgView.width = mosquito.actorImgView.height *= difficultyLevel.getSizeChangeConst();
-//            mosquito.width = mosquito.height *= difficultyLevel.getSizeChangeConst();
-            Gdx.app.debug("Show", String.valueOf(mosquito.actorImgView.x));
             mosquitoList.add(mosquito);
+
+            if (i % 4 == 0) {
+                Bee bee = new Bee(beeTextureList,
+                        difficultyLevel.getEnemySpeed(), onHitButterflyListener);
+                beeList.add(bee);
+                componentsList.add(bee.actorImgView);
+            }
+
             componentsList.add(mosquito.actorImgView);
         }
     }
@@ -226,7 +306,18 @@ public class GameScreen implements Screen {
         @Override
         public void onClick() {
             Gdx.app.debug("onClicked", "onPauseButtonClicked");
-            if (gameSession.getGameState() != GameSession.END_OF_GAME) gameSession.setGameState(GameSession.PAUSE_GAME);
+            if (gameSession.getGameState() != GameSession.END_OF_GAME)
+                gameSession.setGameState(GameSession.PAUSE_GAME);
+        }
+    };
+
+    private Bee.OnHitBeeListener onHitButterflyListener = new Bee.OnHitBeeListener() {
+        @Override
+        public void onHit() {
+            if (gameSession.getGameState() == GameSession.PLAY_GAME) {
+                gameSession.getDamage();
+                SoundExecutor.playMosquitoSound();
+            }
         }
     };
 
