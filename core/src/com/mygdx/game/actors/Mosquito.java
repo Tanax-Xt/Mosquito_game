@@ -16,13 +16,6 @@ public class Mosquito extends Character {
     public Mosquito(ArrayList<Texture> texturesArray, Texture deadMosquitoTexture, float velocity,
                     OnKillMosquitoListener onKillMosquitoListener, DifficultyLevel difficultyLevel) {
         super(texturesArray);
-//        this.height = (int) (this.height * difficultyLevel.getSizeChangeConst());
-//        Gdx.app.debug("Mosquito", String.valueOf(xx));
-//        x = GameSettings.SCR_WIDTH / 2 - width / 2;
-//        y = GameSettings.SCR_HEIGHT / 2 - height / 2;
-//        actorImgView.width = actorImgView.height *= difficultyLevel.getSizeChangeConst();
-//        width = height *= difficultyLevel.getSizeChangeConst();
-
         x = MathUtils.random(1, GameSettings.SCR_WIDTH - GameSettings.SCR_WIDTH / 5);
         y = MathUtils.random(1, GameSettings.SCR_HEIGHT - GameSettings.SCR_HEIGHT / 5);
 

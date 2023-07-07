@@ -19,6 +19,7 @@ import com.mygdx.game.utils.DifficultyLevel;
 import com.mygdx.game.utils.GameSession;
 import com.mygdx.game.utils.GameSettings;
 import com.mygdx.game.utils.MemoryLoader;
+import com.mygdx.game.utils.SoundExecutor;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class GameScreen implements Screen {
     ArrayList<Texture> mosquitoTextureList;
     ArrayList<Mosquito> mosquitoList;
     ArrayList<Butterfly> butterflyList;
+    boolean isSoundPlay;
     MyGdxGame myGdxGame;
     int aliveMosquitoesCount;
     int mosquitoesQuantity;
@@ -93,6 +95,7 @@ public class GameScreen implements Screen {
     public void show() {
         Gdx.app.debug("Show", "Show");
         gameSession = new GameSession();
+        isSoundPlay = MemoryLoader.loadMusicState();
 
         gameSession.setGameState(GameSession.PLAY_GAME);
         loadMosquitoes(MemoryLoader.loadDifficultyLevel());
@@ -199,6 +202,7 @@ public class GameScreen implements Screen {
         @Override
         public void onKill() {
             Gdx.app.debug("onKill", "killed");
+            if (isSoundPlay) SoundExecutor.playMosquitoSound();
             aliveMosquitoesCount -= 1;
             textViewAliveMosquitoesCount.text = "Mosquitoes alive: " + aliveMosquitoesCount + " / " + mosquitoesQuantity;
             if (aliveMosquitoesCount == 0) {

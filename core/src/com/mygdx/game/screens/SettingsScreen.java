@@ -12,6 +12,7 @@ import com.mygdx.game.uiComponents.UiComponent;
 import com.mygdx.game.utils.DifficultyLevel;
 import com.mygdx.game.utils.GameSettings;
 import com.mygdx.game.utils.MemoryLoader;
+import com.mygdx.game.utils.SoundExecutor;
 
 import java.util.ArrayList;
 
@@ -159,7 +160,10 @@ public class SettingsScreen implements Screen {
         public void onClick() {
             boolean isMusicOn = MemoryLoader.loadMusicState();
             MemoryLoader.saveMusicState(!isMusicOn);
+            isMusicOn = !isMusicOn;
             soundsButton.buttonText = getSoundButtonText();
+            if (isMusicOn) SoundExecutor.playBackSound();
+            else SoundExecutor.stopPlaying();
         }
     };
 }
