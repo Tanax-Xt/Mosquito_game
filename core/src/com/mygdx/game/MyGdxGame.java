@@ -16,7 +16,9 @@ import com.mygdx.game.screens.AboutScreen;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.SettingsScreen;
+import com.mygdx.game.utils.MemoryLoader;
 import com.mygdx.game.utils.MyCustomFont;
+import com.mygdx.game.utils.SoundExecutor;
 
 import java.util.Vector;
 
@@ -40,6 +42,7 @@ public class MyGdxGame extends Game {
         batch = new SpriteBatch();
         camera = new OrthographicCamera(1920, 1080);
         camera.setToOrtho(false, 1920, 1080);
+        if (MemoryLoader.loadMusicState()) SoundExecutor.playBackSound();
 
         commonFont = new MyCustomFont(40, "fonts/arnamu.ttf", new Color(1, 1, 1, 1));
         accentFont = new MyCustomFont(40, "fonts/arnamubi.ttf", new Color(1, 1, 1, 1));

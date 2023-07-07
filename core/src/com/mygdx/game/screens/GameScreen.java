@@ -46,7 +46,6 @@ public class GameScreen implements Screen {
     ProgressBar progressBar;
 
     public GameScreen(MyGdxGame myGdxGame) {
-        SoundExecutor.playBackSound();
         this.myGdxGame = myGdxGame;
 
         Gdx.app.debug("GameScreen", "constructor");
