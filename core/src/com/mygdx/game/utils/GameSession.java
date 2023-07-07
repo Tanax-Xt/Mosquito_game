@@ -11,10 +11,19 @@ public class GameSession {
     private int gameState = -1;
     public long startTime;
     public long pauseStartTime;
+    public int hitPointsLeft;
 
     public GameSession() {
         gameState = PLAY_GAME;
         startTime = TimeUtils.millis();
+        hitPointsLeft = MemoryLoader.loadDifficultyLevel().getUserHitPoints();
+    }
+
+    public void getDamage() {
+        hitPointsLeft = Math.max(hitPointsLeft - GameSettings.BUTTERFLY_DAMAGE, 0);
+        if (hitPointsLeft == 0) {
+            gameState = GAME_OVER;
+        }
     }
 
     public String getSessionTime() {

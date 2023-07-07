@@ -6,13 +6,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.game.MyGdxGame;
 
 public class ProgressBar extends UiComponent {
-
     Texture backFullBarTexture;
     Texture frontBarTexture;
-
     private final int maxWidth;
     private double maxValue;
-
     private final String barTitle;
     private final BitmapFont bitmapFont;
 
@@ -44,7 +41,6 @@ public class ProgressBar extends UiComponent {
         myGdxGame.batch.draw(backFullBarTexture, x, y, maxWidth, height);
         myGdxGame.batch.draw(frontBarTexture, x, y, width, height);
         bitmapFont.draw(myGdxGame.batch, barTitle, x + maxWidth + 15, y + 40);
-//        myGdxGame.commonFont.bitmapFont.draw(myGdxGame.batch, barTitle, x + maxWidth + 15, y + 40);
     }
 
     void initBars() {
