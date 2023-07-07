@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
         textViewSessionTime = new TextView(myGdxGame.commonFont.bitmapFont, "", 700, 700);
         returnButton = new TextButton(myGdxGame.accentFont.bitmapFont, "Return home", 300, 500);
 
-        pauseButton = new ImageView(1250, 900, 150, 150, "icons/pauseIcon.png");
+        pauseButton = new ImageView(100, 900, 100, 100, "icons/pauseIcon.png");
         pauseButton.setOnClickListener(onPauseButtonClickListener);
         pauseTextInfo = new TextView(myGdxGame.commonFont.bitmapFont, "Game is stopped", 300, 800);
 
@@ -202,7 +202,6 @@ public class GameScreen implements Screen {
             Gdx.app.debug("onClicked", "onReturnButtonClicked");
             myGdxGame.gameScreen = new GameScreen(myGdxGame);
             myGdxGame.setScreen(myGdxGame.menuScreen);
-
         }
     };
 
