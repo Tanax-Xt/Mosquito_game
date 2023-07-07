@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.actors.Butterfly;
 import com.mygdx.game.actors.Mosquito;
 import com.mygdx.game.ui.TextView;
 import com.mygdx.game.uiComponents.Blackout;
@@ -27,6 +28,7 @@ public class GameScreen implements Screen {
     ArrayList<UiComponent> uiComponentsListPauseOfGame;
     ArrayList<Texture> mosquitoTextureList;
     ArrayList<Mosquito> mosquitoList;
+    ArrayList<Butterfly> butterflyList;
     MyGdxGame myGdxGame;
     int aliveMosquitoesCount;
     int mosquitoesQuantity;
@@ -48,6 +50,7 @@ public class GameScreen implements Screen {
         uiComponentsListEndOfGame = new ArrayList<>();
         uiComponentsListPauseOfGame = new ArrayList<>();
         mosquitoList = new ArrayList<>();
+        butterflyList = new ArrayList<>();
 
         textViewAliveMosquitoesCount = new TextView(myGdxGame.commonFont.bitmapFont, "", 1420, 980);
         textViewSessionTime = new TextView(myGdxGame.commonFont.bitmapFont, "", 700, 700);
@@ -97,6 +100,10 @@ public class GameScreen implements Screen {
 
             for (Mosquito mosquito : mosquitoList) {
                 if (mosquito.isAlive) mosquito.update();
+            }
+
+            for (Butterfly butterfly: butterflyList) {
+                butterfly.update();
             }
         }
 
