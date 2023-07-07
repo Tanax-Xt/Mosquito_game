@@ -23,7 +23,7 @@ public class SettingsScreen implements Screen {
     TextView difficultyLabel;
     TextButton difficultyButton;
     TextButton soundsButton;
-    TextButton resetButton;
+//    TextButton resetButton;
 
     public SettingsScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
@@ -41,7 +41,7 @@ public class SettingsScreen implements Screen {
         soundsButton = new TextButton(myGdxGame.commonFont.bitmapFont, getSoundButtonText(), 200, 600);
         soundsButton.setOnClickListener(onChangeMusicClickListener);
 
-        resetButton = new TextButton(myGdxGame.commonFont.bitmapFont, "Clear all saves", 200, 500);
+//        resetButton = new TextButton(myGdxGame.commonFont.bitmapFont, "Clear all saves", 200, 500);
 
         componentsList.add(background);
         componentsList.add(title);
@@ -49,7 +49,7 @@ public class SettingsScreen implements Screen {
         componentsList.add(returnButton);
         componentsList.add(difficultyButton);
         componentsList.add(soundsButton);
-        componentsList.add(resetButton);
+//        componentsList.add(resetButton);
     }
 
     @Override
