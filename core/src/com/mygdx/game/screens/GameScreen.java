@@ -96,7 +96,7 @@ public class GameScreen implements Screen {
         Gdx.app.debug("Show", "Show");
         gameSession = new GameSession();
         isSoundPlay = MemoryLoader.loadMusicState();
-        Gdx.app.debug("Show", String.valueOf(gameSession.gameState));
+        Gdx.app.debug("Show", String.valueOf(gameSession.getGameState()));
         gameSession.setGameState(GameSession.PLAY_GAME);
         progressBar.setMaxValue(MemoryLoader.loadDifficultyLevel().getUserHitPoints());
         loadActors(MemoryLoader.loadDifficultyLevel());
@@ -104,26 +104,21 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-//        Gdx.app.debug("Render", "Render");
+        Gdx.app.debug("Render", "Render");
         if (Gdx.input.justTouched()) {
             Vector3 vector3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             vector3 = myGdxGame.camera.unproject(vector3);
-            if (gameSession.gameState == GameSession.PLAY_GAME) {
+            if (gameSession.getGameState() == GameSession.PLAY_GAME) {
                 for (UiComponent component : componentsList) {
                     if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
                 }
-            } else if (gameSession.gameState == GameSession.GAME_OVER) {
+            } else if (gameSession.getGameState() == GameSession.GAME_OVER) {
                 for (UiComponent component : uiComponentsListGameOver) {
                     if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
                 }
-            } else if (gameSession.gameState == GameSession.END_OF_GAME) {
+            } else if (gameSession.getGameState() == GameSession.END_OF_GAME) {
                 for (UiComponent component : uiComponentsListEndOfGame) {
                     if (component.isVisible) component.isHit((int) vector3.x, (int) vector3.y);
-                }
-            } else if (gameSession.gameState == GameSession.PAUSE_GAME) {
-                if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
-                for (UiComponent component : uiComponentsListPauseOfGame) {
-                    component.draw(myGdxGame.batch);
                 }
             }
         }
@@ -134,8 +129,9 @@ public class GameScreen implements Screen {
             }
 
             for (Bee bee : beeList) bee.update();
-            progressBar.setValue(gameSession.hitPointsLeft);
         }
+
+        progressBar.setValue(gameSession.hitPointsLeft);
 
 
         ScreenUtils.clear(0, 0, 0, 1);
@@ -156,6 +152,15 @@ public class GameScreen implements Screen {
                 component.draw(myGdxGame.batch);
             }
         }
+
+
+        if (gameSession.getGameState() == GameSession.PAUSE_GAME) {
+            if (Gdx.input.justTouched()) hitHandler(uiComponentsListPauseOfGame);
+            for (UiComponent component : uiComponentsListPauseOfGame) {
+                component.draw(myGdxGame.batch);
+            }
+        }
+
         myGdxGame.batch.end();
     }
 
@@ -251,8 +256,7 @@ public class GameScreen implements Screen {
         @Override
         public void onClick() {
             Gdx.app.debug("onClicked", "onPauseButtonClicked");
-//            if (gameSession.getGameState() != GameSession.END_OF_GAME)
-//                gameSession.setGameState(GameSession.PAUSE_GAME);
+            if (gameSession.getGameState() != GameSession.END_OF_GAME) gameSession.setGameState(GameSession.PAUSE_GAME);
         }
     };
 

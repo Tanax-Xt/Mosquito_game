@@ -7,7 +7,7 @@ public class GameSession {
     public static final int END_OF_GAME = 1;
     public static final int GAME_OVER = 2;
     public static final int PAUSE_GAME = 3;
-    public int gameState = -1;
+    private int gameState = -1;
     public long startTime;
     public long pauseStartTime;
     public int hitPointsLeft;
